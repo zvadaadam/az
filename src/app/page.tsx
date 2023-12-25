@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from 'next/link'
 import Image from 'next/image'
 import { FaXTwitter } from "react-icons/fa6";
@@ -9,16 +9,25 @@ import { FaInstagram } from "react-icons/fa6";
 import { FaTiktok } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa6";
 import { compareDesc, format, parseISO } from 'date-fns'
-import { allBlogs } from "contentlayer/generated"
+import { allBlogs, allRecommendations } from "contentlayer/generated"
 
 
 export default function Landing() {
+  const [selectedSegment, setSelectedSegment] = useState('writings');
+
   return (
     <div className="bg-black text-white flex items-center justify-center">
         <section className="flex flex-col h-screen justify-between w-full max-w-[3000px] mx-auto min-h-screen">
           <Header />
           <Main />
-          <Content />
+          <div className="flex justify-center space-x-4 p-4">
+            <button onClick={() => setSelectedSegment('writings')} className={`px-4 py-2 ${selectedSegment === 'writings' ? 'bg-white text-black' : ''}`}>Writings</button>
+            <button onClick={() => setSelectedSegment('recommendations')} className={`px-4 py-2 ${selectedSegment === 'recommendations' ? 'bg-white text-black' : ''}`}>Recommendations</button>
+            <button onClick={() => setSelectedSegment('readings')} className={`px-4 py-2 ${selectedSegment === 'readings' ? 'bg-white text-black' : ''}`}>Readings</button>
+          </div>
+          {selectedSegment === 'writings' && <Writings />}
+          {selectedSegment === 'recommendations' && <Recommendations />}
+          {selectedSegment === 'readings' && <Readings />}
           <Footer />
       </section>
     </div>
@@ -36,22 +45,69 @@ function Main() {
   );
 }
 
-function Content() {
+function Writings() {
   const blogs = allBlogs.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
 
   return (
-    <div className="mx-auto max-w-xl py-8 h-full">
-      <h1 className="text-xl mb-8 text-left">Writings</h1>
+    <div className="mx-auto">
+      <h1 className="text-xl mb-4 text-left">Writings</h1>
       <div className="prose dark:prose-invert">
         {blogs.map((blog) => (
           <Link href={blog.slug}>
-            <article key={blog._id} className="cursor-pointer hover:underline">
-              <div className="flex justify-between items-center">
+            <article key={blog._id} className="cursor-pointer py-4 hover:bg-gray-900 border-b border-gray-800 w-full">
+              <div className="flex justify-between items-center pb-1">
                 <h2>{blog.title}</h2>
-                <span>{format(parseISO(blog.date), 'MMMM dd, yyyy')}</span>
+                <span className="text-gray-500 tracking-tighter">{format(parseISO(blog.date), 'MMM yy')}</span>
               </div>
-              {blog.description && <p>{blog.description}</p>}
-              <hr />
+              {blog.description && <p className="text-gray-500 text-sm font-light">{blog.description}</p>}
+            </article>
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function Recommendations() {
+
+  return (
+    <div className="mx-auto">
+      <h1 className="text-xl mb-4 text-left">What I like</h1>
+      <div className="prose dark:prose-invert">
+        {allRecommendations.map((recommendation) => (
+          <Link href={recommendation.website}>
+            <article key={recommendation._id} className="cursor-pointer py-4 hover:bg-gray-900 border-b border-gray-800 w-full flex">
+              <div className="flex">
+                <img src={recommendation.content} alt={recommendation.product} className="w-full h-auto" />
+                <div className="flex flex-col items-left pb-1">
+                  <h2>{recommendation.product}</h2>
+                  {recommendation.description && <p className="text-gray-500 text-sm font-light">{recommendation.description}</p>}
+                </div>
+              </div>
+            </article>
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function Readings() {
+
+  return (
+    <div className="mx-auto">
+      <h1 className="text-xl mb-4 text-left">What I like</h1>
+      <div className="prose dark:prose-invert">
+        {allRecommendations.map((recommendation) => (
+          <Link href={recommendation.website}>
+            <article key={recommendation._id} className="cursor-pointer py-4 hover:bg-gray-900 border-b border-gray-800 w-full flex">
+              <div className="flex">
+                <img src={recommendation.content} alt={recommendation.product} className="w-full h-auto" />
+                <div className="flex flex-col items-left pb-1">
+                  <h2>{recommendation.product}</h2>
+                  {recommendation.description && <p className="text-gray-500 text-sm font-light">{recommendation.description}</p>}
+                </div>
+              </div>
             </article>
           </Link>
         ))}

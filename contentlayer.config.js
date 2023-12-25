@@ -25,7 +25,22 @@ export const Blog = defineDocumentType(() => ({
   computedFields: computedFields,
 }))
 
+export const Recommendations = defineDocumentType(() => ({
+    name: 'Recommendations',
+    filePathPattern: `recommendations/**/*.mdx`,
+    contentType: "mdx",
+    fields: {
+      product: { type: 'string', required: true },
+      date: { type: 'date', required: true },
+      description: { type: 'string', required: true },
+      category: { type: 'string', required: true },
+      website: { type: 'string', required: true },
+      content: { type: 'string', required: true },
+    },
+    computedFields: computedFields,
+}))
+
 export default makeSource({ 
     contentDirPath: './content', 
-    documentTypes: [Blog] 
+    documentTypes: [Blog, Recommendations] 
 })
