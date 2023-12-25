@@ -12,23 +12,6 @@ import { compareDesc, format, parseISO } from 'date-fns'
 import { allBlogs } from "contentlayer/generated"
 
 
-// function BlogCard(blog: Blog) {
-//   return (
-//     <div className="mb-8">
-//       <h2 className="mb-1 text-xl">
-//         <Link href={blog.url} className="text-blue-700 hover:text-blue-900 dark:text-blue-400">
-//           {blog.title}
-//         </Link>
-//       </h2>
-//       <time dateTime={blog.date} className="mb-2 block text-xs text-gray-600">
-//         {format(parseISO(blog.date), 'LLLL d, yyyy')}
-//       </time>
-//       <div className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0" dangerouslySetInnerHTML={{ __html: post.body.html }} />
-//     </div>
-//   )
-// }
-
-
 export default function Landing() {
   return (
     <div className="bg-black text-white flex items-center justify-center">
@@ -57,18 +40,22 @@ function Content() {
   const blogs = allBlogs.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
 
   return (
-    <div className="mx-auto max-w-xl py-8">
+    <div className="mx-auto max-w-xl py-8 h-full">
       <h1 className="text-xl mb-8 text-left">Writings</h1>
       <div className="prose dark:prose-invert">
-      {allBlogs.map((blog) => (
-        <article key={blog._id}>
+        {blogs.map((blog) => (
           <Link href={blog.slug}>
-            <h2>{blog.title}</h2>
+            <article key={blog._id} className="cursor-pointer hover:underline">
+              <div className="flex justify-between items-center">
+                <h2>{blog.title}</h2>
+                <span>{format(parseISO(blog.date), 'MMMM dd, yyyy')}</span>
+              </div>
+              {blog.description && <p>{blog.description}</p>}
+              <hr />
+            </article>
           </Link>
-          {blog.description && <p>{blog.description}</p>}
-        </article>
-      ))}
-    </div>
+        ))}
+      </div>
     </div>
   )
 }
