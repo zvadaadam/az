@@ -1,11 +1,32 @@
+"use client";
+
 import React from "react";
+import Link from 'next/link'
 import Image from 'next/image'
-import AZIcon from './../../public/az.svg';
 import { FaXTwitter } from "react-icons/fa6";
 import { FaGithub } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa6";
 import { FaTiktok } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa6";
+import { compareDesc, format, parseISO } from 'date-fns'
+import { allBlogs } from "contentlayer/generated"
+
+
+// function BlogCard(blog: Blog) {
+//   return (
+//     <div className="mb-8">
+//       <h2 className="mb-1 text-xl">
+//         <Link href={blog.url} className="text-blue-700 hover:text-blue-900 dark:text-blue-400">
+//           {blog.title}
+//         </Link>
+//       </h2>
+//       <time dateTime={blog.date} className="mb-2 block text-xs text-gray-600">
+//         {format(parseISO(blog.date), 'LLLL d, yyyy')}
+//       </time>
+//       <div className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0" dangerouslySetInnerHTML={{ __html: post.body.html }} />
+//     </div>
+//   )
+// }
 
 
 export default function Landing() {
@@ -14,6 +35,7 @@ export default function Landing() {
         <section className="flex flex-col h-screen justify-between w-full max-w-[3000px] mx-auto min-h-screen">
           <Header />
           <Main />
+          <Content />
           <Footer />
       </section>
     </div>
@@ -27,19 +49,28 @@ function Main() {
         <h1 className="text-2xl font-medium tracking-tighter">Adam Zvada</h1>
         <h2 className="text-xl font-small text-gray-500 tracking-tighter">curious human being who loves to build <br/> and think about the future</h2>
       </div>
-      <Content />
     </div>
   );
 }
 
 function Content() {
+  const blogs = allBlogs.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
+
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-      <div className="flex flex-col items-center justify-center mt-10 h-full">
-        CONTENT
-      </div>
+    <div className="mx-auto max-w-xl py-8">
+      <h1 className="text-xl mb-8 text-left">Writings</h1>
+      <div className="prose dark:prose-invert">
+      {allBlogs.map((blog) => (
+        <article key={blog._id}>
+          <Link href={blog.slug}>
+            <h2>{blog.title}</h2>
+          </Link>
+          {blog.description && <p>{blog.description}</p>}
+        </article>
+      ))}
     </div>
-  );
+    </div>
+  )
 }
 
 
@@ -48,7 +79,7 @@ function Header() {
     <div className="flex items-center w-full justify-between p-6">
       <Image src="/az.svg" alt="AZ Logo" width={32} height={32} priority/>
       <div className="flex justify-end gap-2 items-center group">
-        <span className="font-light text-xs uppercase text-white text-opacity-25 group-hover:translate-x-[-10px] transition-transform md:inline hidden">Adam's socials -&gt;</span> 
+        <span className="font-light text-xs uppercase text-white text-opacity-25 group-hover:translate-x-[-10px] transition-transform md:inline hidden">Adam&apos;s socials -&gt;</span> 
         <a href="https://twitter.com/adamzvada" target="_blank" rel="noopener noreferrer" className="p-2 text-gray-500 hover:text-white transition-all">
           <FaXTwitter className="h-4 w-4 " />
         </a>
