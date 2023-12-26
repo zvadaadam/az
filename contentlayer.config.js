@@ -1,5 +1,7 @@
 // contentlayer.config.ts
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
+import highlight from 'rehype-highlight'
+import remarkGfm from "remark-gfm";
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = {
@@ -41,6 +43,7 @@ export const Recommendations = defineDocumentType(() => ({
 }))
 
 export default makeSource({ 
-    contentDirPath: './content', 
+    contentDirPath: './content',
+    mdx: { rehypePlugins: [remarkGfm] },
     documentTypes: [Blog, Recommendations] 
 })
