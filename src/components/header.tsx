@@ -5,7 +5,7 @@ import { FaXTwitter, FaGithub, FaInstagram, FaTiktok, FaLinkedin } from "react-i
 
 function Header() {
   return (
-    <div className="fixed top-0 z-50 flex items-center w-full justify-between p-6">
+    <div className="fixed top-0 z-50 flex items-center w-full justify-between p-6 bg-gradient-to-t from-transparent to-black">
       <Link href="/">
         <Image src="/az.svg" alt="AZ Logo" width={32} height={32} priority/>
       </Link>
@@ -14,7 +14,7 @@ function Header() {
         <a href="https://twitter.com/adamzvada" target="_blank" rel="noopener noreferrer" className="p-2 text-gray-500 hover:text-white transition-all">
           <FaXTwitter className="h-4 w-4 " />
         </a>
-        <a href="https://github.com/zvadaadam" target="_blank" rel="noopener noreferrer" className="p-2 text-gray-500 hover:text-white transition-all">
+        <a href="https://www.linkedin.com/in/adam-zvada/" target="_blank" rel="noopener noreferrer" className="p-2 text-gray-500 hover:text-white transition-all">
           <FaLinkedin className="h-4 w-4 " />
         </a>
         <a href="https://www.instagram.com/zvadaadam" target="_blank" rel="noopener noreferrer" className="p-2 text-gray-500 hover:text-white transition-all">

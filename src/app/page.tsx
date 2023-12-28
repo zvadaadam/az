@@ -1,18 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
 import Link from 'next/link'
-import Image from 'next/image'
-import { FaXTwitter } from "react-icons/fa6";
-import { FaGithub } from "react-icons/fa6";
-import { FaInstagram } from "react-icons/fa6";
-import { FaTiktok } from "react-icons/fa6";
-import { FaLinkedin } from "react-icons/fa6";
-import { Button } from "@/components/ui/button";
-import { compareDesc, format, parseISO } from 'date-fns'
-import { allBlogs, allRecommendations } from "contentlayer/generated"
+import React, { useState } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { Button } from "@/components/ui/button";
+import { compareDesc, format, parseISO } from 'date-fns'
+import { allBlogs, allRecommendations, allInterestings } from "contentlayer/generated"
 
 
 export default function Landing() {
@@ -22,16 +16,16 @@ export default function Landing() {
     <div className="bg-black text-white flex items-center justify-center overflow-x-hidden">
         <section className="flex flex-col w-full max-w-[3000px] mx-auto min-h-screen">
           <Header />
-          <div className="flex flex-col items-start justify-center w-full md:w-1/3 mx-auto pb-48 p-8">
+          <div className="flex flex-col items-start justify-center w-full lg:w-1/3 mx-auto pb-48 p-8 md:p-0">
             <Main />
-            <div className="flex space-x-4 -m-4 py-6 overflow-x-auto scrollbar-hide">
+            <div className="flex space-x-4 -m-4 py-8 overflow-x-auto scrollbar-hide">
               <Button variant='ghost' onClick={() => setSelectedSegment('writings')} className={`${selectedSegment !== 'writings' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>Writings</Button>
               <Button variant='ghost' onClick={() => setSelectedSegment('recommendations')} className={`${selectedSegment !== 'recommendations' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>Recommendations</Button>
-              <Button variant='ghost' onClick={() => setSelectedSegment('readings')} className={`${selectedSegment !== 'readings' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>Find Interesting</Button>
+              <Button variant='ghost' onClick={() => setSelectedSegment('interestings')} className={`${selectedSegment !== 'interestings' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>Find Interesting</Button>
             </div>
             {selectedSegment === 'writings' && <Writings />}
             {selectedSegment === 'recommendations' && <Recommendations />}
-            {selectedSegment === 'readings' && <Readings />}
+            {selectedSegment === 'interestings' && <Interestings />}
           </div>
           <Footer />
       </section>
@@ -55,7 +49,6 @@ function Writings() {
 
   return (
     <div className="flex-col">
-      {/* <h1 className="text-xl mb-4 text-left">Writings</h1> */}
       <div className="prose dark:prose-invert">
         {blogs.map((blog, index) => (
           <Link href={blog.slug} key={index}>
@@ -77,46 +70,65 @@ function Recommendations() {
 
   return (
     <div className="mx-auto">
-      <h1 className="text-xl mb-4 text-left">What I like</h1>
       <div className="prose dark:prose-invert">
         {allRecommendations.map((recommendation, index) => (
-          <Link href={recommendation.website} key={index}>
-            <article className="cursor-pointer py-4 hover:bg-gray-900 border-b border-gray-800 w-full flex">
-              <div className="flex">
-                <img src={recommendation.content} alt={recommendation.product} width={500} height={500} className="w-full h-auto" />
-                <div className="flex flex-col items-left pb-1">
-                  <h2>{recommendation.product}</h2>
-                  {recommendation.description && <p className="text-gray-500 text-sm font-light">{recommendation.description}</p>}
-                </div>
-              </div>
-            </article>
-          </Link>
+          <ContentCard 
+            title={recommendation.product} 
+            description={recommendation.description} 
+            website={recommendation.website} 
+            contentImg={recommendation.content} 
+          />
         ))}
       </div>
     </div>
   )
 }
 
-function Readings() {
+function Interestings() {
 
   return (
     <div className="mx-auto">
-      <h1 className="text-xl mb-4 text-left">What I like</h1>
       <div className="prose dark:prose-invert">
-        {allRecommendations.map((recommendation, index) => (
-          <Link href={recommendation.website} key={index}>
-            <article className="cursor-pointer py-4 hover:bg-gray-900 border-b border-gray-800 w-full flex">
-              <div className="flex">
-                <img src={recommendation.content} alt={recommendation.product} className="w-full h-auto" />
-                <div className="flex flex-col items-left pb-1">
-                  <h2>{recommendation.product}</h2>
-                  {recommendation.description && <p className="text-gray-500 text-sm font-light">{recommendation.description}</p>}
-                </div>
-              </div>
-            </article>
-          </Link>
+        {allInterestings.map((interesting, index) => (
+          <ContentCard 
+            title={interesting.product} 
+            description={interesting.description} 
+            website={interesting.website} 
+            contentImg={interesting.content} 
+          />
         ))}
       </div>
     </div>
+  );
+}
+
+
+function ContentCard({title, description, website, contentImg}: {title: string, description: string, website: string, contentImg: string}) {
+  
+  return (
+    <Link href={website}>
+      <article className="cursor-pointer border-b border-gray-800 w-full py-3">
+        <div className="flex flex-col gap-1 pb-2">
+          <h2 className="">{title}</h2>
+          {description && <p className="text-gray-500 text-sm font-light">{description}</p>}
+        </div>
+        <PreviewUrl contentImg={contentImg} website={website} />
+      </article>
+    </Link>
   )
+}
+
+function PreviewUrl({contentImg, website}: {contentImg: string, website: string}) {
+  
+  const getBaseUrl = (url: string) => new URL(url).hostname;
+  
+  return (
+    <div className="relative mb-2">
+      <img src={contentImg} alt={website} className="w-full h-auto rounded hover:ring-2 hover:ring-gray-500 transition-all" />
+      <div className="absolute bottom-1 left-1 bg-black bg-opacity-50 text-white text-xs p-1 rounded-md">
+        {getBaseUrl(website)}
+      </div>
+    </div>
+  )
+
 }

@@ -42,8 +42,23 @@ export const Recommendations = defineDocumentType(() => ({
     computedFields: computedFields,
 }))
 
+export const Interesting = defineDocumentType(() => ({
+    name: 'Interesting',
+    filePathPattern: `interesting/**/*.mdx`,
+    contentType: "mdx",
+    fields: {
+      product: { type: 'string', required: true },
+      date: { type: 'date', required: true },
+      description: { type: 'string', required: true },
+      category: { type: 'string', required: true },
+      website: { type: 'string', required: true },
+      content: { type: 'string', required: true },
+    },
+    computedFields: computedFields,
+}))
+
 export default makeSource({ 
     contentDirPath: './content',
     mdx: { rehypePlugins: [remarkGfm] },
-    documentTypes: [Blog, Recommendations] 
+    documentTypes: [Blog, Recommendations, Interesting] 
 })
