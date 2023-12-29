@@ -16,12 +16,29 @@ export default function Landing() {
     <div className="bg-black text-white flex items-center justify-center overflow-x-hidden">
         <section className="flex flex-col w-full max-w-[3000px] mx-auto min-h-screen">
           <Header />
-          <div className="flex flex-col items-start justify-center w-full lg:w-1/3 mx-auto pb-48 p-8 md:p-0">
+          <div className="flex flex-col items-start justify-center w-full lg:w-1/3 mx-auto p-8 md:p-0">
             <Main />
             <div className="flex space-x-4 -m-4 py-8 overflow-x-auto scrollbar-hide">
-              <Button variant='ghost' onClick={() => setSelectedSegment('writings')} className={`${selectedSegment !== 'writings' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>Writings</Button>
-              <Button variant='ghost' onClick={() => setSelectedSegment('recommendations')} className={`${selectedSegment !== 'recommendations' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>Recommendations</Button>
-              <Button variant='ghost' onClick={() => setSelectedSegment('interestings')} className={`${selectedSegment !== 'interestings' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>Find Interesting</Button>
+              <Button 
+                variant='ghost' 
+                onClick={() => setSelectedSegment('writings')} 
+                className={`${selectedSegment !== 'writings' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>
+                  Writings 
+                  <span className="pl-1 text-gray-500 text-sm">・ {allBlogs.length}</span>
+              </Button>
+              <Button 
+                variant='ghost' 
+                onClick={() => setSelectedSegment('recommendations')} 
+                className={`${selectedSegment !== 'recommendations' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>
+                  Recommendations
+                  <span className="pl-1 text-gray-500 text-sm">・ {allRecommendations.length}</span>
+              </Button>
+              <Button 
+                variant='ghost' onClick={() => setSelectedSegment('interestings')} 
+                className={`${selectedSegment !== 'interestings' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>
+                  Find Interesting
+                  <span className="pl-1 text-gray-500 text-sm">・ {allInterestings.length}</span>
+              </Button>
             </div>
             {selectedSegment === 'writings' && <Writings />}
             {selectedSegment === 'recommendations' && <Recommendations />}
@@ -48,7 +65,7 @@ function Writings() {
   const blogs = allBlogs.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
 
   return (
-    <div className="flex-col">
+    <div className="flex-col pb-24">
       <div className="prose dark:prose-invert">
         {blogs.map((blog, index) => (
           <Link href={blog.slug} key={index}>
@@ -69,10 +86,11 @@ function Writings() {
 function Recommendations() {
 
   return (
-    <div className="mx-auto">
+    <div className="mx-auto pb-24">
       <div className="prose dark:prose-invert">
         {allRecommendations.map((recommendation, index) => (
           <ContentCard 
+            key={index}
             title={recommendation.product} 
             description={recommendation.description} 
             website={recommendation.website} 
@@ -87,10 +105,11 @@ function Recommendations() {
 function Interestings() {
 
   return (
-    <div className="mx-auto">
+    <div className="mx-auto pb-24">
       <div className="prose dark:prose-invert">
         {allInterestings.map((interesting, index) => (
-          <ContentCard 
+          <ContentCard
+            key={index}
             title={interesting.product} 
             description={interesting.description} 
             website={interesting.website} 
@@ -103,10 +122,10 @@ function Interestings() {
 }
 
 
-function ContentCard({title, description, website, contentImg}: {title: string, description: string, website: string, contentImg: string}) {
+function ContentCard({key, title, description, website, contentImg}: {key: number, title: string, description: string, website: string, contentImg: string}) {
   
   return (
-    <Link href={website}>
+    <Link href={website} key={key}>
       <article className="cursor-pointer border-b border-gray-800 w-full py-3">
         <div className="flex flex-col gap-1 pb-2">
           <h2 className="">{title}</h2>
