@@ -42,17 +42,13 @@ export const Recommendations = defineDocumentType(() => ({
     computedFields: computedFields,
 }))
 
-export const Interesting = defineDocumentType(() => ({
-    name: 'Interesting',
-    filePathPattern: `interesting/**/*.mdx`,
+export const About = defineDocumentType(() => ({
+    name: 'About',
+    filePathPattern: `about/**/*.mdx`,
     contentType: "mdx",
     fields: {
-      product: { type: 'string', required: true },
-      date: { type: 'date', required: true },
-      description: { type: 'string', required: true },
-      category: { type: 'string', required: true },
-      website: { type: 'string', required: true },
-      content: { type: 'string', required: true },
+      title: { type: 'string', required: true },
+      susbtitle: { type: 'string', required: true },
     },
     computedFields: computedFields,
 }))
@@ -60,5 +56,5 @@ export const Interesting = defineDocumentType(() => ({
 export default makeSource({ 
     contentDirPath: './content',
     mdx: { rehypePlugins: [remarkGfm] },
-    documentTypes: [Blog, Recommendations, Interesting] 
+    documentTypes: [Blog, Recommendations, About] 
 })

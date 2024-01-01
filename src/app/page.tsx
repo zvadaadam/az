@@ -6,8 +6,8 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { compareDesc, format, parseISO } from 'date-fns'
-import { allBlogs, allRecommendations, allInterestings } from "contentlayer/generated"
-
+import { allBlogs, allRecommendations, allAbouts } from "contentlayer/generated"
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 export default function Landing() {
   const [selectedSegment, setSelectedSegment] = useState('writings');
@@ -18,6 +18,7 @@ export default function Landing() {
           <Header />
           <div className="flex flex-col items-start justify-center w-full lg:w-1/3 mx-auto p-8 md:p-0">
             <Main />
+            <Startups />
             <div className="flex space-x-4 -m-4 py-8 overflow-x-auto scrollbar-hide">
               <Button 
                 variant='ghost' 
@@ -33,16 +34,9 @@ export default function Landing() {
                   Recommendations
                   <span className="pl-1 text-gray-500 text-sm">・ {allRecommendations.length}</span>
               </Button>
-              <Button 
-                variant='ghost' onClick={() => setSelectedSegment('interestings')} 
-                className={`${selectedSegment !== 'interestings' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>
-                  Find Interesting
-                  <span className="pl-1 text-gray-500 text-sm">・ {allInterestings.length}</span>
-              </Button>
             </div>
             {selectedSegment === 'writings' && <Writings />}
             {selectedSegment === 'recommendations' && <Recommendations />}
-            {selectedSegment === 'interestings' && <Interestings />}
           </div>
           <Footer />
       </section>
@@ -59,6 +53,40 @@ function Main() {
       </div>
     </div>
   );
+}
+
+function Startups() {
+  const startups = [
+    { name: 'Singular (e.g., NFTScoring)', description: 'NFT Exchange for Market Makers', traction: "YC-backed startup with over half a million users. Reched $100k MRR before the NFT market crashed.", website: 'https://google.com', content: "https://arc.net/og.png", timeRange: "2021 - 2023" },
+    { name: 'GoDeliver', description: 'Platform for hyper-local delivery', traction: "TODO", website: 'https://google.com', content: "https://arc.net/og.png", timeRange: "2021 - 2023" },
+    { name: 'Cognitic', description: 'Data Science & AI Studio', traction: "TODO", website: 'https://google.com', content: "https://arc.net/og.png", timeRange: "2021 - 2023" },
+    { name: 'Fuzee', description: 'City planning app combing all modes of transport', traction: "TODO", website: 'https://google.com', content: "https://arc.net/og.png", timeRange: "2021 - 2023" },
+    { name: 'Qusion', description: 'Web & Mobile Sudio', website: 'https://google.com', traction: "TODO", content: "https://arc.net/og.png", timeRange: "2021 - 2023" },
+  ];
+
+  return (
+    <Carousel className="w-full py-8">
+      <CarouselContent className="-ml-1">
+        {startups.map((startup, index) => (
+          <CarouselItem key={index} className="pl-1">
+            <div className="p-1 relative group rounded-md">
+              <img src={startup.content} alt={startup.name} className="w-full h-full object-cover transition duration-500 ease-in-out group-hover:opacity-50 rounded-lg" />
+              <div className="absolute inset-0 bg-black bg-opacity-0 transition duration-500 ease-in-out group-hover:bg-opacity-50 rounded-lg">
+                <div className="flex flex-col aspect-square items-start justify-start p-6 opacity-0 group-hover:opacity-100">
+                  <h2 className="text-xl font-semibold text-white tracking-tighter">{startup.name}</h2>
+                  <p className="text-base text-gray-200">{startup.description}</p>
+                  <p className="text-sm text-gray-400 absolute top-0 right-0 p-5">{startup.timeRange}</p>
+                  <p className="text-sm text-gray-200 absolute bottom-0 left-0 p-5">{startup.traction}</p>
+                </div>
+              </div>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious className='text-gray-500 bg-black border-gray-500'/>
+      <CarouselNext className='text-gray-500 bg-black border-gray-500'/>
+    </Carousel>
+  )
 }
 
 function Writings() {
@@ -100,25 +128,6 @@ function Recommendations() {
       </div>
     </div>
   )
-}
-
-function Interestings() {
-
-  return (
-    <div className="mx-auto pb-24">
-      <div className="prose dark:prose-invert">
-        {allInterestings.map((interesting, index) => (
-          <ContentCard
-            key={index}
-            title={interesting.product} 
-            description={interesting.description} 
-            website={interesting.website} 
-            contentImg={interesting.content} 
-          />
-        ))}
-      </div>
-    </div>
-  );
 }
 
 
