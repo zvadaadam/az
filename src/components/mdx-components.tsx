@@ -63,7 +63,7 @@ const components = {
   ),
   a: ({ className, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
     <a
-      className={cn("font-medium underline underline-offset-4", className)}
+      className={cn("font-medium underline underline-offset-4 hover:text-zinc-400 transition-colors", className)}
       {...props}
     />
   ),
@@ -132,7 +132,7 @@ const components = {
   pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
     <pre
       className={cn(
-        "mb-4 mt-6 overflow-x-auto rounded-md border bg-black py-4",
+        "mb-4 mt-6 overflow-x-auto rounded-md border bg-black py-4 border-zinc-800",
         className
       )}
       {...props}

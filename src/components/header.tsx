@@ -6,7 +6,7 @@ import { FaXTwitter, FaGithub, FaInstagram, FaTiktok, FaLinkedin } from "react-i
 function Header() {
   return (
     <div className="fixed top-0 z-50 flex items-center w-full justify-between p-6 bg-gradient-to-t from-transparent to-black">
-      <Link href="/">
+      <Link href="/" className="transform transition-transform hover:scale-110">
         <Image src="/az.svg" alt="AZ Logo" width={32} height={32} priority/>
       </Link>
       <div className="flex justify-end gap-2 items-center group">
