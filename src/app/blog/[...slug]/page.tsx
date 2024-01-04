@@ -52,6 +52,8 @@ export default async function PostPage({ params }: BlogProps) {
     notFound()
   }
 
+  console.log(blog)
+
   return (
     <div className="flex flex-col min-h-screen bg-black text-white">
       <Header />
@@ -65,7 +67,7 @@ export default async function PostPage({ params }: BlogProps) {
         <time dateTime={blog.date} className="mb-1 text-xs text-slate-600">
           {format(parseISO(blog.date), 'LLLL d, yyyy')}
         </time>
-        <hr className="my-4 border-gray-800" />
+        <hr className="my-4 border-zinc-800" />
         <div className="text-slate-200 text-base mb-36">
           <Mdx code={blog.body.code} />
         </div>

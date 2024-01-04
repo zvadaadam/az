@@ -14,6 +14,7 @@ type CarouselProps = {
   plugins?: CarouselPlugin[]
   orientation?: "horizontal" | "vertical"
   setApi?: (api: CarouselApi) => void
+  itemCount: number
 }
 
 type CarouselContextProps = {
@@ -49,6 +50,7 @@ const Carousel = React.forwardRef<
       plugins,
       className,
       children,
+      itemCount,
       ...props
     },
     ref
@@ -62,6 +64,7 @@ const Carousel = React.forwardRef<
     )
     const [canScrollPrev, setCanScrollPrev] = React.useState(false)
     const [canScrollNext, setCanScrollNext] = React.useState(false)
+    const [currentIndex, setCurrentIndex] = React.useState(0)
 
     const onSelect = React.useCallback((api: CarouselApi) => {
       if (!api) {
@@ -70,6 +73,7 @@ const Carousel = React.forwardRef<
 
       setCanScrollPrev(api.canScrollPrev())
       setCanScrollNext(api.canScrollNext())
+      setCurrentIndex(api.selectedScrollSnap())
     }, [])
 
     const scrollPrev = React.useCallback(() => {
@@ -127,6 +131,7 @@ const Carousel = React.forwardRef<
           scrollNext,
           canScrollPrev,
           canScrollNext,
+          itemCount,
         }}
       >
         <div
@@ -138,6 +143,7 @@ const Carousel = React.forwardRef<
           {...props}
         >
           {children}
+          <CarouselIndicator currentIndex={currentIndex} itemCount={itemCount} />
         </div>
       </CarouselContext.Provider>
     )
@@ -247,6 +253,20 @@ const CarouselNext = React.forwardRef<
 })
 CarouselNext.displayName = "CarouselNext"
 
+function CarouselIndicator({currentIndex, itemCount}: {currentIndex: number, itemCount: number}) {
+  return (
+    <div className="flex justify-center space-x-2 mt-2">
+      {Array.from({length: itemCount}).map((_, index) => (
+        <div 
+          key={index} 
+          className={`h-1 w-1 rounded-full ${currentIndex === index ? 'bg-white' : 'bg-gray-500'}`}
+        />
+      ))}
+    </div>
+  );
+}
+CarouselIndicator.displayName = "CarouselIndicator";
+
 export {
   type CarouselApi,
   Carousel,
@@ -254,4 +274,5 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  CarouselIndicator,
 }

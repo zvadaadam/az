@@ -7,7 +7,7 @@ import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { compareDesc, format, parseISO } from 'date-fns'
 import { allBlogs, allRecommendations, allAbouts } from "contentlayer/generated"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, CarouselIndicator } from "@/components/ui/carousel";
 
 export default function Landing() {
   const [selectedSegment, setSelectedSegment] = useState('writings');
@@ -23,16 +23,16 @@ export default function Landing() {
               <Button 
                 variant='ghost' 
                 onClick={() => setSelectedSegment('writings')} 
-                className={`${selectedSegment !== 'writings' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>
+                className={`${selectedSegment !== 'writings' ? 'text-zinc-500' : 'text-white'} hover:text-white hover:bg-zinc-900 text-base tracking-tighter`}>
                   Writings 
-                  <span className="pl-1 text-gray-500 text-sm">・ {allBlogs.length}</span>
+                  <span className="pl-1 text-zinc-500 text-sm">・ {allBlogs.length}</span>
               </Button>
               <Button 
                 variant='ghost' 
                 onClick={() => setSelectedSegment('recommendations')} 
-                className={`${selectedSegment !== 'recommendations' ? 'text-gray-500' : 'text-white'} hover:text-white hover:bg-gray-900 text-base tracking-tighter`}>
+                className={`${selectedSegment !== 'recommendations' ? 'text-zinc-500' : 'text-white'} hover:text-white hover:bg-zinc-900 text-base tracking-tighter`}>
                   Recommendations
-                  <span className="pl-1 text-gray-500 text-sm">・ {allRecommendations.length}</span>
+                  <span className="pl-1 text-zinc-500 text-sm">・ {allRecommendations.length}</span>
               </Button>
             </div>
             {selectedSegment === 'writings' && <Writings />}
@@ -49,7 +49,7 @@ function Main() {
     <div className="flex flex-col justify-center h-64 pt-40 pb-24">
       <div className="flex flex-col items-start justify-center text-left gap-2">
         <h1 className="text-2xl font-medium tracking-tighter">Adam Zvada</h1>
-        <h2 className="text-xl font-small text-gray-500 tracking-tighter">curious human being who loves to build <br/> and think about the future</h2>
+        <h2 className="text-xl font-small text-zinc-500 tracking-tighter">curious human being who loves to build <br/> and think about the future</h2>
       </div>
     </div>
   );
@@ -65,7 +65,7 @@ function Startups() {
   ];
 
   return (
-    <Carousel className="w-full py-8">
+    <Carousel itemCount={startups.length} className="w-full mb-12">
       <CarouselContent className="-ml-1">
         {startups.map((startup, index) => (
           <CarouselItem key={index} className="pl-1">
@@ -74,17 +74,17 @@ function Startups() {
               <div className="absolute inset-0 bg-black bg-opacity-0 transition duration-500 ease-in-out group-hover:bg-opacity-50 rounded-lg">
                 <div className="flex flex-col aspect-square items-start justify-start p-6 opacity-0 group-hover:opacity-100">
                   <h2 className="text-xl font-semibold text-white tracking-tighter">{startup.name}</h2>
-                  <p className="text-base text-gray-200">{startup.description}</p>
-                  <p className="text-sm text-gray-400 absolute top-0 right-0 p-5">{startup.timeRange}</p>
-                  <p className="text-sm text-gray-200 absolute bottom-0 left-0 p-5">{startup.traction}</p>
+                  <p className="text-base text-zinc-200">{startup.description}</p>
+                  <p className="text-sm text-zinc-400 absolute top-0 right-0 p-5">{startup.timeRange}</p>
+                  <p className="text-sm text-zinc-200 absolute bottom-0 left-0 p-5">{startup.traction}</p>
                 </div>
               </div>
             </div>
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className='text-gray-500 bg-black border-gray-500'/>
-      <CarouselNext className='text-gray-500 bg-black border-gray-500'/>
+      <CarouselPrevious className='text-zinc-500 bg-black border-zinc-500'/>
+      <CarouselNext className='text-zinc-500 bg-black border-zinc-500'/>
     </Carousel>
   )
 }
@@ -97,12 +97,12 @@ function Writings() {
       <div className="prose dark:prose-invert">
         {blogs.map((blog, index) => (
           <Link href={blog.slug} key={index}>
-            <article className="cursor-pointer py-4 hover:bg-gray-900 border-b border-gray-800 w-full">
+            <article className="cursor-pointer py-4 hover:bg-zinc-900 border-b border-zinc-800 w-full">
               <div className="flex justify-between items-center pb-1">
-                <h2>{blog.title}</h2>
-                <span className="text-gray-500 tracking-tighter">{format(parseISO(blog.date), 'MMM yy')}</span>
+                <h2 className='pb-1'>{blog.title}</h2>
+                <span className="text-zinc-500 tracking-tighter text-sm pr-2">{format(parseISO(blog.date), 'MMM yy')}</span>
               </div>
-              {blog.description && <p className="text-gray-500 text-sm font-light">{blog.description}</p>}
+              {blog.description && <p className="text-zinc-500 text-sm font-light">{blog.description}</p>}
             </article>
           </Link>
         ))}
@@ -135,10 +135,10 @@ function ContentCard({key, title, description, website, contentImg}: {key: numbe
   
   return (
     <Link href={website} key={key}>
-      <article className="cursor-pointer border-b border-gray-800 w-full py-3">
+      <article className="cursor-pointer border-b border-zinc-800 w-full py-6">
         <div className="flex flex-col gap-1 pb-2">
-          <h2 className="">{title}</h2>
-          {description && <p className="text-gray-500 text-sm font-light">{description}</p>}
+          <h2 className="pb-1">{title}</h2>
+          {description && <p className="text-zinc-500 text-sm font-light">{description}</p>}
         </div>
         <PreviewUrl contentImg={contentImg} website={website} />
       </article>
@@ -152,7 +152,7 @@ function PreviewUrl({contentImg, website}: {contentImg: string, website: string}
   
   return (
     <div className="relative mb-2">
-      <img src={contentImg} alt={website} className="w-full h-auto rounded hover:ring-2 hover:ring-gray-500 transition-all" />
+      <img src={contentImg} alt={website} className="w-full h-auto rounded hover:ring-2 hover:ring-zinc-500 transition-all" />
       <div className="absolute bottom-1 left-1 bg-black bg-opacity-50 text-white text-xs p-1 rounded-md">
         {getBaseUrl(website)}
       </div>
