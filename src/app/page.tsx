@@ -13,7 +13,7 @@ import Blogs from "@/components/blogs";
 import Recommendations from '@/components/recommendations';
 
 export default function Landing() {
-  const [selectedSegment, setSelectedSegment] = useState('writings');
+  const [selectedSegment, setSelectedSegment] = useState('recommendations');
 
   return (
     <div className="bg-black text-zinc-200 flex items-center justify-center overflow-x-hidden">
