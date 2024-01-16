@@ -11,46 +11,46 @@ import {
 function Startups() {
   const startups = [
     {
-      name: "Singular (e.g., NFTScoring)",
+      name: "Singular / NFTScoring",
       description: "NFT Exchange for Market Makers",
       traction:
-        "YC-backed startup with over half a million users. Reched $100k MRR before the NFT market crashed.",
+        "YC-backed startup with +500k users. Reched $100k MRR before the NFT market crashed.",
       website: "https://google.com",
-      content: "https://arc.net/og.png",
+      content: "/singular.mp4",
       timeRange: "2021 - 2023",
     },
     {
       name: "GoDeliver",
-      description: "Platform for hyper-local delivery",
-      traction: "TODO",
+      description: "B2B Hyper-local delivery platform",
+      traction: "Operated in Czechia, Switzerland, and Germany. Reached $2k MRR. Hard business to onboard customers.",
       website: "https://google.com",
-      content: "https://arc.net/og.png",
-      timeRange: "2021 - 2023",
+      content: "/godeliver.png",
+      timeRange: "2020 - 2021",
+    },
+    {
+      name: "Fuzee",
+      description: "City planning app combining all modes of transport",
+      traction: "B2C app with 10k+ users. Partnered with car manufacturer SKODA.",
+      website: "https://google.com",
+      content: "/fuzee.png",
+      timeRange: "2018 - 2020",
     },
     {
       name: "Cognitic",
       description: "Data Science & AI Studio",
-      traction: "TODO",
+      traction: "Bulding AI solutions for clients. Funded my startups Fuzee & GoDeliver.",
       website: "https://google.com",
-      content: "https://arc.net/og.png",
-      timeRange: "2021 - 2023",
+      content: "/cognitic.png",
+      timeRange: "2018 - 2021",
     },
-    {
-      name: "Fuzee",
-      description: "City planning app combing all modes of transport",
-      traction: "TODO",
-      website: "https://google.com",
-      content: "https://arc.net/og.png",
-      timeRange: "2021 - 2023",
-    },
-    {
-      name: "Qusion",
-      description: "Web & Mobile Sudio",
-      website: "https://google.com",
-      traction: "TODO",
-      content: "https://arc.net/og.png",
-      timeRange: "2021 - 2023",
-    },
+    // {
+    //   name: "Qusion",
+    //   description: "Web & Mobile Sudio",
+    //   website: "https://google.com",
+    //   traction: "TODO",
+    //   content: "https://arc.net/og.png",
+    //   timeRange: "2021 - 2023",
+    // },
   ];
 
   return (
@@ -59,11 +59,21 @@ function Startups() {
         {startups.map((startup, index) => (
           <CarouselItem key={index} className="pl-1">
             <div className="p-1 relative group rounded-md">
-              <img
-                src={startup.content}
-                alt={startup.name}
-                className="w-full h-full object-cover transition duration-500 ease-in-out group-hover:opacity-50 rounded-lg"
-              />
+              {startup.content.endsWith('.mp4') ? (
+                <video
+                  src={startup.content}
+                  className="w-full h-full object-cover transition duration-500 ease-in-out group-hover:opacity-50 rounded-lg"
+                  loop
+                  autoPlay
+                  muted
+                />
+              ) : (
+                <img
+                  src={startup.content}
+                  alt={startup.name}
+                  className="w-full h-full object-cover transition duration-500 ease-in-out group-hover:opacity-50 rounded-lg"
+                />
+              )}
               <div className="absolute inset-0 bg-black bg-opacity-0 transition duration-500 ease-in-out group-hover:bg-opacity-50 rounded-lg">
                 <div className="flex flex-col aspect-square items-start justify-start p-6 opacity-0 group-hover:opacity-100">
                   <h2 className="text-xl pb-1 font-semibold text-zinc-200 tracking-tighter">
