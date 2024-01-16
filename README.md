@@ -1,8 +1,10 @@
 ## Adam's Personal Site
 
-Check out the page [here](https://adamzvada.com)
+![og](./public/og.png)
 
-This is a personal site built primarily with 
+Check out the page [here](https://adamzvada.com).
+
+This is a personal site built with 
 - [Next.js App Router](https://nextjs.org/)
 - [Contentlayer](https://contentlayer.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)

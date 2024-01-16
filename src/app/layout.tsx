@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react';
+import Head from 'next/head';
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -17,6 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className='bg-black'>
+      <Head>
+        <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/adamzvada-36805.appspot.com/o/og.png?alt=media&token=f56192ed-e834-4116-a13f-899d3b95a8bf" />
+      </Head>
       <body className={inter.className}>
         {children}
         <Analytics />
