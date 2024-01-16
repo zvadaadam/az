@@ -66,6 +66,7 @@ function Startups() {
                   loop
                   autoPlay
                   muted
+                  playsInline
                 />
               ) : (
                 <img
@@ -94,8 +95,8 @@ function Startups() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="hidden md:block text-zinc-500 bg-black border-zinc-500" />
-      <CarouselNext className="hidden md:block text-zinc-500 bg-black border-zinc-500" />
+      <CarouselPrevious className="hidden md:flex justify-center items-center text-zinc-500 bg-black border-zinc-500" />
+      <CarouselNext className="hidden md:flex justify-center items-center text-zinc-500 bg-black border-zinc-500" />
     </Carousel>
   )
 }

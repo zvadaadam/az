@@ -59,7 +59,7 @@ export default async function PostPage({ params }: BlogProps) {
     <div className="flex flex-col min-h-screen bg-black text-white">
       <Header />
       <article className="py-40 mx-auto max-w-xl flex-grow">
-        <Link href="/blog" className="text-sm text-zinc-600 hover:text-zinc-200">
+        <Link href="/" className="text-sm text-zinc-600 hover:text-zinc-200">
           {'<- Back'}
         </Link>
         <h1 className="text-4xl font-semibold tracking-tighter mb-2 mt-8 text-zinc-200">{blog.title}</h1>
