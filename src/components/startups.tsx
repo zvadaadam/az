@@ -13,8 +13,7 @@ function Startups() {
     {
       name: "Singular / NFTScoring",
       description: "NFT Exchange for Market Makers",
-      traction:
-        "YC-backed startup with +500k users. Reched $100k MRR before the NFT market crashed.",
+      traction: "YC-backed startup with +500k users. Reached $89k MRR before the NFT market crashed.",
       website: "https://google.com",
       content: "/singular.mp4",
       timeRange: "2021 - 2023",

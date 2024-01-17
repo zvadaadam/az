@@ -8,7 +8,12 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Adam Zvada',
-  description: 'Adam Zvada\'s Personal Site.',
+  description: 'Adam Zvada\'s personal site. His thoughts, ideas, and recommendations.',
+  openGraph: {
+    images: 'https://firebasestorage.googleapis.com/v0/b/adamzvada-36805.appspot.com/o/og.png?alt=media&token=f56192ed-e834-4116-a13f-899d3b95a8bf',
+    locale: 'en_US',
+    type: 'website',
+  },
 }
 
 export default function RootLayout({
@@ -18,9 +23,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className='bg-black'>
-      <Head>
+      {/* <Head>
         <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/adamzvada-36805.appspot.com/o/og.png?alt=media&token=f56192ed-e834-4116-a13f-899d3b95a8bf" />
-      </Head>
+      </Head> */}
       <body className={inter.className}>
         {children}
         <Analytics />
